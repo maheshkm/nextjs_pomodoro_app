@@ -14,11 +14,11 @@ const LengthSettings: React.FC<LengthSettingsProps> = ({ title, length, onincrea
         <div className="flex flex-col items-center">  
             <h2 className="text-xl  font-bold mb-3">{title}</h2>
             <div className="flex justify-center items-center space-x-2">
-                <Button variant="danger" onClick={ondecrease} disabled={isdisabled}>   
+                <Button variant="default" onClick={ondecrease} disabled={isdisabled}>   
                     -
                 </Button>
                 <span className="text-lg font-mono">{length}</span>
-                <Button variant="primary" onClick={onincrease} disabled={isdisabled}>
+                <Button variant="default" onClick={onincrease} disabled={isdisabled}>
                     +
                 </Button>           
             </div>
@@ -26,4 +26,4 @@ const LengthSettings: React.FC<LengthSettingsProps> = ({ title, length, onincrea
     ); 
 } 
 
-                    
+export default LengthSettings;                  
