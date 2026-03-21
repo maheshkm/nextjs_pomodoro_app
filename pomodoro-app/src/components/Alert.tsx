@@ -27,7 +27,7 @@ const Alert: React.FC<AlertProps> = ({ message, onClose }) => {
         <div className="fixed top-0 left-0 w-full bg-blue-100 text-blue-800 border-t-4 border-blue-800 p-4 flex items-center justify-between z-50">
             <InformationCircleIcon className="h-6 w-6 mr-2" />      
             <span className="flex-1">{message}</span>
-            <button onClick={onClose} className="ml-4">
+            <button onClick={onClose} className="ml-4" aria-label="close">
                 <XMarkIcon className="h-6 w-6 text-blue-800" /> 
             </button>
         </div>

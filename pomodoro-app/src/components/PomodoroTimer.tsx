@@ -10,13 +10,15 @@ import LengthSettings  from "./LengthSettings";
 import Alert from "./Alert";    
 import Controls from "./Controls";
 const PomodoroTimer: React.FC = () => { 
-    const [sessionLength, setSessionLength] = useState(25); // in minutes
-    const [breakLength, setBreakLength] = useState(5); // in minutes
+    const DEFAULT_SESSION_LENGTH = 25; // in minutes
+    const DEFAULT_BREAK_LENGTH = 5; // in minutes
+    const [sessionLength, setSessionLength] = useState(DEFAULT_SESSION_LENGTH);
+    const [breakLength, setBreakLength] = useState(DEFAULT_BREAK_LENGTH);
     const [currentMode, setCurrentMode] = useState<'session' | 'break'>('session');
     const [isRunning, setIsRunning] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const prevModeRef = useRef<'session' | 'break'>('session');
-    const [currentTime, setCurrentTime] = useState(sessionLength * 60); // in seconds
+    const [currentTime, setCurrentTime] = useState(DEFAULT_SESSION_LENGTH * 60); // in seconds
 
     useEffect(() => {
         if (!isRunning) return;
@@ -77,10 +79,13 @@ const PomodoroTimer: React.FC = () => {
         const adjustLength = (type: 'session' | 'break', adjustment: number) => {
 
             if (type === 'session') {
-                setSessionLength(prev => Math.max(1, Math.min( prev + adjustment,60)));
-                if (currentMode === 'session' && !isRunning) {
-                    setCurrentTime(sessionLength + adjustment * 60);
-                }
+                setSessionLength(prev => {
+                    const newLength = Math.max(1, Math.min( prev + adjustment,60));
+                    if (currentMode === 'session' && !isRunning) {
+                        setCurrentTime(newLength * 60);
+                    }
+                    return newLength;
+                });
             } else {
                 setBreakLength(prev => Math.max(1, Math.min( prev + adjustment,30)));
             }
@@ -102,8 +107,8 @@ const PomodoroTimer: React.FC = () => {
                 <LengthSettings 
                 title="Break Length" 
                 length={breakLength} 
-                onincrease={() => adjustLength('session', 1)} 
-                ondecrease={() => adjustLength('session', -1)} 
+                onincrease={() => adjustLength('break', 1)} 
+                ondecrease={() => adjustLength('break', -1)} 
                 isdisabled={isRunning}
                 />
             </div>
